@@ -1,4 +1,3 @@
-// const { sampleHandeler } = require('./handelers/routeHandeler/sampleHandeler');
 const { sampleHandeler } = require('./handelers/routeHandeler/sampleHandeler');
 
 const routes = {

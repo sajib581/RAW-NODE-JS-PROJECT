@@ -23,16 +23,10 @@ handeler.handleReqRes = (req, res) => {
         queryStringObject,
         headersObject,
     };
-    console.log('routes', routes);
-    console.log('trimmedPath', trimmedPath);
-    console.log('routes[trimmedPath]', routes[trimmedPath]);
     const choseHandeler = routes[trimmedPath] ? routes[trimmedPath] : notFoundHandeler;
-    console.log(choseHandeler);
 
     choseHandeler(requestProperties, (statusCode, payload) => {
-        // eslint-disable-next-line no-param-reassign
         statusCode = typeof statusCode === 'number' ? statusCode : 500;
-        // eslint-disable-next-line no-param-reassign
         payload = typeof payload === 'object' ? payload : {};
 
         const payloadString = JSON.stringify(payload);
@@ -46,7 +40,6 @@ handeler.handleReqRes = (req, res) => {
     req.on('end', () => {
         realData += decoder.end();
         console.log(realData);
-        res.end('Hello Boss');
     });
 };
 
