@@ -1,8 +1,8 @@
-
 {
-  "scripts":{
-    "start":"nodemon index"
-   },
+  "scripts": {
+    "start": "SET NODE_ENV=staging&&nodemon index.js",
+    "production": "SET NODE_ENV=production&&nodemon index.js"
+  },
   "devDependencies": {
     "eslint": "7.2.0",
     "eslint-config-airbnb-base": "14.2.1",

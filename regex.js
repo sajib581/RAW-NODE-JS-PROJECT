@@ -1,4 +1,4 @@
-const text = '#2A2A2A';
+const text = '#2A2A2A ';
 // const regex = /#?([\da-fA-F]{2})([\da-fA-F]{2})([\da-fA-F]{2})/g;
 
 const regex = /#?(\d[a-fA-F])+/g;

@@ -6,7 +6,7 @@ const { notFoundHandeler } = require('../handelers/routeHandeler/notFoundHandler
 const handeler = {};
 
 handeler.handleReqRes = (req, res) => {
-    const parsedUrl = url.parse(req.url, true); 
+    const parsedUrl = url.parse(req.url, true);
     const path = parsedUrl.pathname;
     const trimmedPath = path.replace(/^\/+|\/+$/g, '');
     const method = req.method.toLowerCase();
@@ -25,21 +25,19 @@ handeler.handleReqRes = (req, res) => {
     };
     const choseHandeler = routes[trimmedPath] ? routes[trimmedPath] : notFoundHandeler;
 
-    choseHandeler(requestProperties, (statusCode, payload) => {
-        statusCode = typeof statusCode === 'number' ? statusCode : 500;
-        payload = typeof payload === 'object' ? payload : {};
-
-        const payloadString = JSON.stringify(payload);
-        res.writeHead(statusCode);
-        res.end(payloadString);
-    });
-
     req.on('data', (buffer) => {
         realData += decoder.write(buffer);
     });
     req.on('end', () => {
         realData += decoder.end();
-        console.log(realData);
+        choseHandeler(requestProperties, (statusCode, payload) => {
+            statusCode = typeof statusCode === 'number' ? statusCode : 500;
+            payload = typeof payload === 'object' ? payload : {};
+
+            const payloadString = JSON.stringify(payload);
+            res.writeHead(statusCode);
+            res.end(payloadString);
+        });
     });
 };
 
