@@ -15,6 +15,15 @@ data.read('test', 'newFile', (err, result) => {
     console.log(err, result);
 });
 
+// Update File System
+data.update('test', 'newFile', { name: 'England', language: 'English' }, (err) => {
+    console.log(err);
+});
+
+// File Delete System
+data.delete('test', 'newFile', (err) => {
+    console.log(err);
+});
 // create server
 app.createServer = () => {
     const server = http.createServer(app.handleReqRes);
