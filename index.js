@@ -21,7 +21,7 @@ data.update('test', 'newFile', { name: 'England', language: 'English' }, (err) =
 });
 
 // File Delete System
-data.delete('test', 'newFile', (err) => {
+data.deletes('test', 'newFile', (err) => {
     console.log(err);
 });
 // create server

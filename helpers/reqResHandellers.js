@@ -1,7 +1,9 @@
+/* eslint-disable no-param-reassign */
 const url = require('url');
 const { StringDecoder } = require('string_decoder'); // buffer => Data
 const routes = require('../routes');
 const { notFoundHandeler } = require('../handelers/routeHandeler/notFoundHandler');
+const { parseJSON } = require('../utilities/utilities');
 
 const handeler = {};
 
@@ -30,12 +32,17 @@ handeler.handleReqRes = (req, res) => {
     });
     req.on('end', () => {
         realData += decoder.end();
+        requestProperties.body = parseJSON(realData);
         choseHandeler(requestProperties, (statusCode, payload) => {
             statusCode = typeof statusCode === 'number' ? statusCode : 500;
             payload = typeof payload === 'object' ? payload : {};
 
             const payloadString = JSON.stringify(payload);
+
+            // return the final string
+            res.setHeader('Content-Type', 'application/json');
             res.writeHead(statusCode);
+            // res.end();
             res.end(payloadString);
         });
     });
