@@ -54,6 +54,7 @@ let {
     }
 };
 
+// @TODO: Authentication
 handeler._user.get = (requestProperties, callback) => {
     const phone = requestProperties.queryStringObject.phone.trim().length === 11 ? requestProperties.queryStringObject.phone : false;
     if (phone) {
@@ -71,6 +72,7 @@ handeler._user.get = (requestProperties, callback) => {
     }
 };
 
+// @TODO: Authentication
 handeler._user.put = (requestProperties, callback) => {
     let {
         firstName, lastName, phone, password,
@@ -113,6 +115,7 @@ handeler._user.put = (requestProperties, callback) => {
            }
 };
 
+// @TODO Authentication
 handeler._user.delete = (requestProperties, callback) => {
     const phone = requestProperties.queryStringObject.phone.trim().length === 11 ? requestProperties.queryStringObject.phone : false;
        if (phone) {

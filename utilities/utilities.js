@@ -1,3 +1,5 @@
+/* eslint-disable comma-dangle */
+/* eslint-disable no-plusplus */
 const crypto = require('crypto');
 const environment = require('../environment');
 
@@ -12,6 +14,23 @@ utilities.parseJSON = (string) => {
         output = {};
     }
     return output;
+};
+
+utilities.createRandomString = (strLength) => {
+    let length = strLength;
+    length = typeof length === 'number' && length > 0 ? length : false;
+    if (length) {
+        const possibleCharacters = 'abcdefghijklmnopqrstuvwxyz0123456789';
+        let output = '';
+        for (let i = 0; i < length; i++) {
+            const randomCharacter = possibleCharacters.charAt(
+                Math.floor(Math.random() * possibleCharacters.length)
+            );
+            output += randomCharacter;
+        }
+        return output;
+    }
+    return false;
 };
 
 utilities.hassPass = (str) => {
