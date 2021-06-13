@@ -2,7 +2,7 @@
 /* eslint-disable no-underscore-dangle */
 
 const {
-    read, create,
+    read, create, update, deletes,
    } = require('../../lib/data');
    const { hassPass, parseJSON, createRandomString } = require('../../utilities/utilities');
 
@@ -68,13 +68,53 @@ const {
     }
    };
 
-//    // @TODO: Authentication
-//    handeler._token.put = (requestProperties, callback) => {
+   handeler._token.put = (requestProperties, callback) => {
+    let { id, extend } = requestProperties.body;
+    id = typeof id === 'string' && id.trim().length === 20 ? id : false;
+    extend = typeof extend === 'boolean' && extend ? extend : false;
 
-//    };
+    if (id && extend) {
+        read('tokens', id, (err1, tokenData) => {
+            if (!err1) {
+                const tokenObject = parseJSON(tokenData);
+                if (tokenObject.expires > Date.now()) {
+                    tokenObject.expires = Date.now() + 60 * 60 * 1000;
+                    update('tokens', id, tokenObject, (err2) => {
+                        if (!err2) {
+                            callback(200);
+                        } else {
+                            callback(500, { error: 'Server Error' });
+                        }
+                    });
+                } else {
+                    callback(400, { error: 'Token already expired' });
+                }
+            } else {
+                callback(400, { eror: 'Token not found' });
+            }
+        });
+    }
+   };
 
-//    // @TODO Authentication
-//    handeler._token.delete = (requestProperties, callback) => {
-//    };
+   handeler._token.delete = (requestProperties, callback) => {
+    const id = requestProperties.queryStringObject.id.trim().length === 20 ? requestProperties.queryStringObject.id : false;
+    if (id) {
+     read('tokens', id, (err, tokenData) => {
+         if (!err && tokenData) {
+             deletes('tokens', id, (err2) => {
+                 if (!err2) {
+                     callback(200, { message: 'Token deleted successfully' });
+                 } else {
+                     callback(500, { message: 'Server error' });
+                 }
+             });
+         } else {
+             callback(404, { message: 'token not found' });
+         }
+     });
+    } else {
+        callback(400, { message: 'invalid type id' });
+    }
+   };
 
    module.exports = handeler;
