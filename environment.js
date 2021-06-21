@@ -5,12 +5,14 @@ environtments.staging = {
     port: 3000,
     envName: 'staging',
     secretKey: 'huasddfjghgsdtdgbsn',
+    maxCheck: 5,
 };
 
 environtments.production = {
     port: 5000,
     envName: 'production',
     secretKey: 'jhgrtbdhrtgkjoweuiwjflk',
+    maxCheck: 5,
 };
 
 // eslint-disable-next-line prettier/prettier
