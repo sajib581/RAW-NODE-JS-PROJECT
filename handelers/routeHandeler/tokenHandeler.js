@@ -131,6 +131,8 @@ handeler._token.verify = (id, phone, callback) => {
       if (parseJSON(tokenData).phone === phone && parseJSON(tokenData).expires > Date.now()) {
         callback(true);
       } else {
+        const errHints = parseJSON(tokenData).expires < Date.now() ? 'expires' : 'phone problem';
+        console.log(errHints);
         console.log("False because can't satisfy condition");
         callback(false);
       }
