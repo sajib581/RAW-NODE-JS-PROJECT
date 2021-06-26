@@ -3,8 +3,15 @@ const http = require('http');
 const { handleReqRes } = require('./helpers/reqResHandellers');
 const environment = require('./environment');
 const data = require('./lib/data');
+const { sendTwilioSms } = require('./helpers/notification');
 // app module
 const app = {};
+
+// @TODO remove latter
+sendTwilioSms('01859006890', 'Hello World', (err) => {
+    console.log('This is the error', err);
+});
+
 // Create file system
 data.create('test', 'newFile', { name: 'Bangladesh', language: 'Bangla' }, (err) => {
     console.log('Error was ', err);
